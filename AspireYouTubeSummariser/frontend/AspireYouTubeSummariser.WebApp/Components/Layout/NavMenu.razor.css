@@ -1,0 +1,102 @@
+.navbar-toggler {
+  appearance: none;
+  cursor: pointer;
+  width: 3.5rem;
+  height: 2.5rem;
+  color: white;
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")
+    no-repeat center/1.75rem rgba(255, 255, 255, 0.1);
+}
+
+.navbar-toggler:checked {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.top-row {
+  height: 3.5rem;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.navbar-brand {
+  font-size: 1.1rem;
+}
+
+.bi {
+  display: inline-block;
+  position: relative;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.75rem;
+  top: -1px;
+  background-size: cover;
+}
+
+.bi-youtube-nav-menu {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-youtube' viewBox='0 0 16 16'%3E%3Cpath d='M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z'/%3E%3C/svg%3E");
+}
+
+.bi-thermometer-sun-nav-menu {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-thermometer-sun' viewBox='0 0 16 16'%3E%3Cpath d='M5 12.5a1.5 1.5 0 1 1-2-1.415V2.5a.5.5 0 0 1 1 0v8.585A1.5 1.5 0 0 1 5 12.5'/%3E%3Cpath d='M1 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0zM3.5 1A1.5 1.5 0 0 0 2 2.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0L5 10.486V2.5A1.5 1.5 0 0 0 3.5 1m5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5m4.243 1.757a.5.5 0 0 1 0 .707l-.707.708a.5.5 0 1 1-.708-.708l.708-.707a.5.5 0 0 1 .707 0M8 5.5a.5.5 0 0 1 .5-.5 3 3 0 1 1 0 6 .5.5 0 0 1 0-1 2 2 0 0 0 0-4 .5.5 0 0 1-.5-.5M12.5 8a.5.5 0 0 1 .5-.5h1a.5.5 0 1 1 0 1h-1a.5.5 0 0 1-.5-.5m-1.172 2.828a.5.5 0 0 1 .708 0l.707.708a.5.5 0 0 1-.707.707l-.708-.707a.5.5 0 0 1 0-.708M8.5 12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5'/%3E%3C/svg%3E");
+}
+
+.nav-item {
+  font-size: 0.9rem;
+  padding-bottom: 0.5rem;
+}
+
+.nav-item:first-of-type {
+  padding-top: 1rem;
+}
+
+.nav-item:last-of-type {
+  padding-bottom: 1rem;
+}
+
+.nav-item ::deep .nav-link {
+  color: #d7d7d7;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  line-height: 3rem;
+  width: 100%;
+}
+
+.nav-item ::deep a.active {
+  background-color: rgba(255, 255, 255, 0.37);
+  color: white;
+}
+
+.nav-item ::deep .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.nav-scrollable {
+  display: none;
+}
+
+.navbar-toggler:checked ~ .nav-scrollable {
+  display: block;
+}
+
+@media (min-width: 641px) {
+  .navbar-toggler {
+    display: none;
+  }
+
+  .nav-scrollable {
+    /* Never collapse the sidebar for wide screens */
+    display: block;
+
+    /* Allow sidebar to scroll for tall menus */
+    height: calc(100vh - 3.5rem);
+    overflow-y: auto;
+  }
+}
