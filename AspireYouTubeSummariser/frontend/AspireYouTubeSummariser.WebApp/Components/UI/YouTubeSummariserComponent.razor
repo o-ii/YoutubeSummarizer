@@ -1,6 +1,4 @@
-@using System.Web
 @using AspireYouTubeSummariser.WebApp.Clients
-
 @inject IApiAppClient ApiApp
 
 <div class="container mt-5">
@@ -39,29 +37,10 @@
         <button class="btn btn-secondary" @onclick="ClearAsync">Clear</button>
     </div>
 
-    @if (isLoading)
-    {
-        <div class="d-flex justify-content-center mt-5">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div>
-    }
-    else if (!string.IsNullOrWhiteSpace(summaryResult))
-    {
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <label for="youtube-video" class="form-label">Video</label>
-                <div class="ratio ratio-16x9">
-                    <iframe src="@($"https://www.youtube.com/embed/{ExtractVideoId(youTubeLinkUrl)}")" allowfullscreen></iframe>
-                </div>
-            </div>
-            <div class="col-md-6 d-flex flex-column">
-                <label for="result" class="form-label">Summary</label>
-                <textarea class="form-control flex-grow-1" id="result" readonly>@summaryResult</textarea>
-            </div>
-        </div>
-    }
+    <div class="form-group mt-4">
+        <label for="result" class="form-label">Summary</label>
+        <textarea class="form-control" id="result" rows="10" placeholder="Result will show here" readonly>@summaryResult</textarea>
+    </div>
 
 </div>
 
@@ -70,12 +49,9 @@
     private string videoLanguageCode = "en";
     private string summaryLanguageCode = "ko";
     private string summaryResult = string.Empty;
-    private bool isLoading = false;
 
     private async Task SummariseAsync()
     {
-        isLoading = true;
-
         try
         {
             var result = await ApiApp.SummariseAsync(youTubeLinkUrl, videoLanguageCode, summaryLanguageCode);
@@ -85,10 +61,6 @@
         {
             summaryResult = ex.Message;
         }
-        finally
-        {
-            isLoading = false;
-        }
     }
 
     private async Task ClearAsync()
@@ -97,27 +69,7 @@
         videoLanguageCode = "en";
         summaryLanguageCode = "ko";
         summaryResult = string.Empty;
-        isLoading = false;
 
         await Task.CompletedTask;
-    }
-
-    private string ExtractVideoId(string url)
-    {
-        if (string.IsNullOrEmpty(url))
-        {
-            return null;
-        }
-        try
-        {
-            var uri = new Uri(url);
-            var query = HttpUtility.ParseQueryString(uri.Query);
-
-            return query["v"];
-        }
-        catch
-        {
-            return null;
-        }
     }
 }
