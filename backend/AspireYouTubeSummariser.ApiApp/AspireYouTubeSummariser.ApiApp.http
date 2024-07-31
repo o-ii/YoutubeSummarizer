@@ -1,4 +1,4 @@
-@AspireYouTubeSummariser.ApiApp_HostAddress = http://localhost:5085
+@AspireYouTubeSummariser.ApiApp_HostAddress = http://localhost:5294
 
 GET {{AspireYouTubeSummariser.ApiApp_HostAddress}}/weatherforecast/
 Accept: application/json

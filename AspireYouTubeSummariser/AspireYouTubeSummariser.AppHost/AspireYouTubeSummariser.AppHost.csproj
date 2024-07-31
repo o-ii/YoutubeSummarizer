@@ -6,17 +6,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsAspireHost>true</IsAspireHost>
-    <UserSecretsId>2911429a-1ced-4259-a9bc-88649923a9ff</UserSecretsId>
+    <UserSecretsId>e3886f21-4ba7-421d-9861-cc6a5bb99617</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" Version="8.1.0" />
-    <PackageReference Include="Aspire.Hosting.Redis" Version="8.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\frontend\AspireYouTubeSummariser.WebApp\AspireYouTubeSummariser.WebApp.csproj" />
-    <ProjectReference Include="..\backend\AspireYouTubeSummariser.ApiApp\AspireYouTubeSummariser.ApiApp.csproj" />
+    <ProjectReference Include="..\..\frontend\AspireYouTubeSummariser.WebApp\AspireYouTubeSummariser.WebApp.csproj" />
+    <ProjectReference Include="..\..\backend\AspireYouTubeSummariser.ApiApp\AspireYouTubeSummariser.ApiApp.csproj" />
   </ItemGroup>
 
 </Project>
