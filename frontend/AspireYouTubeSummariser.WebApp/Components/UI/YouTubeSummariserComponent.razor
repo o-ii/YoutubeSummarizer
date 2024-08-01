@@ -1,61 +1,101 @@
+@using System.Web
 @using AspireYouTubeSummariser.WebApp.Clients
 @inject IApiAppClient ApiApp
 
-<div class="container">
-    <div class="row">
-        <h2>YouTube Summariser</h2>
+<div class="container mt-4">
+    <div class="text-center mb-4">
+        <h1 class="display-5">YouTube Summariser</h1>
     </div>
 
-    <div class="row">
-        <div class="col">
-            <div class="mb-3">
+    <div class="row mb-3">
+        <div class="col d-flex align-items-end">
+            <div class="form-group flex-grow-1">
                 <label for="youtube-link" class="form-label"><strong>YouTube Link</strong></label>
                 <input class="form-control" id="youtube-link" placeholder="Add YouTube link here" @bind="youTubeLinkUrl" />
             </div>
-        </div>
-        <div class="col">
-            <div class="mb-3">
-                <label for="video-language-code" class="form-label"><strong>Video Language</strong></label>
-                <select class="form-select" id="video-language-code" aria-label="Video language code" @bind="videoLanguageCode">
-                    <option value="en" selected>English</option>
-                    <option value="ko">Korean</option>
-                </select>
-            </div>
-        </div>
-        <div class="col">
-            <div class="mb-3">
-                <label for="summary-language-code" class="form-label"><strong>Summary Language</strong></label>
-                <select class="form-select" id="summary-language-code" aria-label="Summary language code" @bind="summaryLanguageCode">
-                    <option value="en" selected>English</option>
-                    <option value="ko">Korean</option>
-                </select>
+            <div class="ms-2">
+                <button type="button" class="btn btn-outline-primary" @onclick="ClearAsync">Clear</button>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="mb-3">
-            <button type="button" class="btn btn-primary" id="summary" @onclick="SummariseAsync">Summary</button>
-            <button type="button" class="btn btn-secondary" @onclick="ClearAsync">Clear!</button>
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-floating">
+                <select class="form-select" id="video-language-code" @bind="videoLanguageCode">
+                    <option value="zh">🇨🇳 Chinese</option>
+                    <option value="en" selected>🇺🇸 English</option>
+                    <option value="fr">🇫🇷 French</option>
+                    <option value="de">🇩🇪 German</option>
+                    <option value="hi">🇮🇳 Hindi</option>
+                    <option value="ja">🇯🇵 Japanese</option>
+                    <option value="ko">🇰🇷 Korean</option>
+                    <option value="pt">🇵🇹 Portuguese</option>
+                    <option value="ru">🇷🇺 Russian</option>
+                    <option value="es">🇪🇸 Spanish</option>
+                </select>
+                <label for="video-language-code">Video Language</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating">
+                <select class="form-select" id="summary-language-code" @bind="summaryLanguageCode">
+                    <option value="zh">🇨🇳 Chinese</option>
+                    <option value="en">🇺🇸 English</option>
+                    <option value="fr">🇫🇷 French</option>
+                    <option value="de">🇩🇪 German</option>
+                    <option value="hi">🇮🇳 Hindi</option>
+                    <option value="ja">🇯🇵 Japanese</option>
+                    <option value="ko" selected>🇰🇷 Korean</option>
+                    <option value="pt">🇵🇹 Portuguese</option>
+                    <option value="ru">🇷🇺 Russian</option>
+                    <option value="es">🇪🇸 Spanish</option>
+                </select>
+                <label for="summary-language-code">Summary Language</label>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="mb-3">
+    <div class="d-flex justify-content-center mb-5">
+        @if (!isLoading)
+        {
+            <button type="button" class="btn btn-primary w-100" id="summary" @onclick="SummariseAsync">Summary</button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-primary w-100" disabled>
+                <span class="spinner-border spinner-border-sm"></span>
+                Loading...
+            </button>
+        }
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <label class="form-label"><strong>Video</strong></label>
+            <div class="ratio ratio-16x9">
+                <iframe src="@($"https://www.youtube.com/embed/{ExtractVideoId(youTubeLinkUrl)}")"></iframe>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex flex-column">
             <label for="result" class="form-label"><strong>Summary</strong></label>
-            <textarea class="form-control" id="result" rows="10" placeholder="Result will show here" readonly>@summaryResult</textarea>
+            <textarea class="form-control flex-grow-1" id="result" placeholder="Result will show here" readonly>@summaryResult</textarea>
         </div>
     </div>
+
 </div>
 
 @code {
     private string youTubeLinkUrl = string.Empty;
     private string videoLanguageCode = "en";
-    private string summaryLanguageCode = "en";
+    private string summaryLanguageCode = "ko";
     private string summaryResult = string.Empty;
+    private bool isLoading = false;
 
     private async Task SummariseAsync()
     {
+        isLoading = true;
+
         try
         {
             var result = await ApiApp.SummariseAsync(youTubeLinkUrl, videoLanguageCode, summaryLanguageCode);
@@ -65,15 +105,39 @@
         {
             summaryResult = ex.Message;
         }
+        finally
+        {
+            isLoading = false;
+        }
     }
 
     private async Task ClearAsync()
     {
         youTubeLinkUrl = string.Empty;
         videoLanguageCode = "en";
-        summaryLanguageCode = "en";
+        summaryLanguageCode = "ko";
         summaryResult = string.Empty;
+        isLoading = false;
 
         await Task.CompletedTask;
+    }
+
+    private string ExtractVideoId(string url)
+    {
+        if (string.IsNullOrEmpty(url))
+        {
+            return null;
+        }
+        try
+        {
+            var uri = new Uri(url);
+            var query = HttpUtility.ParseQueryString(uri.Query);
+
+            return query["v"];
+        }
+        catch
+        {
+            return null;
+        }
     }
 }
